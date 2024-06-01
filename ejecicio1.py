@@ -43,6 +43,8 @@ if __name__ == "__main__":
     print("4. Ley de Ampère (curl B = μ_0 * J + σ * E)")
 
     ecuacion = input("Ingresa tu elección (1-4): ")
+    print("Has seleccionado:", ecuacion)  # Agregamos este mensaje de depuración
+    resultado = None
 
     if ecuacion == "1":
         resultado = solver.solve_gauss_law()
@@ -54,8 +56,7 @@ if __name__ == "__main__":
         resultado = solver.solve_amperes_law()
     else:
         print("Selección de ecuación inválida")
-        resultado = None
-
+    
     if resultado is not None:
         print("Resultado de resolver la ecuación {}: {}".format(ecuacion, resultado))
 
