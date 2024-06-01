@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import os
-import sys
 import numpy as np
 from gmes.geometry import Cartesian
 from gmes.material import DcpPlrc, DcpAde, DrudePole, CriticalPoint
@@ -22,18 +20,17 @@ class Plata(DcpPlrc):
         DcpPlrc.__init__(self, eps_inf=0.89583, mu_inf=1, sigma=0, dps=(dp1,), cps=(cp1, cp2))
 
 def seleccionar_material():
-    print("Selecciona el material:")
-    print("1. Oro")
-    print("2. Plata")
-    eleccion = input("Ingresa tu elección: ")
-    a = float(input("Ingresa la constante de red en metros: "))
-    if eleccion == '1':
-        return Oro(a)
-    elif eleccion == '2':
-        return Plata(a)
-    else:
-        print("Elección inválida")
-        sys.exit()
+    while True:
+        print("Selecciona el material:")
+        print("1. Oro")
+        print("2. Plata")
+        eleccion = input("Ingresa tu elección: ")
+        if eleccion == '1':
+            return Oro
+        elif eleccion == '2':
+            return Plata
+        else:
+            print("Elección inválida")
 
 def seleccionar_ecuacion():
     print("Selecciona la ecuación de Maxwell a utilizar:")
@@ -41,7 +38,12 @@ def seleccionar_ecuacion():
     print("2. Ley de Ampere (curl H = J + dD/dt)")
     print("3. Ley de Gauss para la electricidad (div D = ρ)")
     print("4. Ley de Gauss para el magnetismo (div B = 0)")
-    return input("Ingresa tu elección: ")
+    while True:
+        eleccion = input("Ingresa tu elección: ")
+        if eleccion in {'1', '2', '3', '4'}:
+            return eleccion
+        else:
+            print("Elección inválida")
 
 def obtener_variables_usuario(ecuacion_elegida):
     if ecuacion_elegida == '1':
@@ -86,10 +88,11 @@ def aplicar_ecuacion_maxwell(ecuacion_elegida, variables):
         sys.exit()
 
 def main():
-    material = seleccionar_material()
+    material = seleccionar_material()()
     ecuacion_elegida = seleccionar_ecuacion()
     variables = obtener_variables_usuario(ecuacion_elegida)
     aplicar_ecuacion_maxwell(ecuacion_elegida, variables)
 
 if __name__ == "__main__":
     main()
+
